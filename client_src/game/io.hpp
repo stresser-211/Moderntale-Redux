@@ -4,17 +4,17 @@
 #include "functions.hpp"
 
 void stacktrace(const char* module, const char* msg, ...) {
-    time_t get_time = time(NULL);
-    struct tm* timeinfo;
-    char current_time[80];
-    timeinfo = localtime(&get_time);
-    strftime(current_time, sizeof(current_time), "%Y-%m-%d // %H:%M:%S", timeinfo);
-    fprintf(gl::logfile, "[%s] [%s] ", current_time, module);
-    va_list args;
-    va_start(args, msg);
-    vfprintf(gl::logfile, msg, args);
-    va_end(args);
-    fprintf(gl::logfile, "\n");
+	time_t get_time = time(NULL);
+	struct tm* timeinfo;
+	char current_time[80];
+	timeinfo = localtime(&get_time);
+	strftime(current_time, sizeof(current_time), "%Y-%m-%d // %H:%M:%S", timeinfo);
+	fprintf(gl::logfile, "[%s] [%s] ", current_time, module);
+	va_list args;
+	va_start(args, msg);
+	vfprintf(gl::logfile, msg, args);
+	va_end(args);
+	fprintf(gl::logfile, "\n");
 }
 
 int verify_integrity(void) {
@@ -33,6 +33,7 @@ int verify_integrity(void) {
 			stacktrace(module::error, "\"%s\" is corrupted. (CRC: %X, expected %X)", iter.first, CRC_check, iter.second);
 			throw INTEGRITY_VIOLATED;
 		};
+		stacktrace(module::ios, "\"%s\" status: fine.", iter.first);
 		fclose(check);
 	}
 	return SUCCESS;

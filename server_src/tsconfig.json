@@ -3,7 +3,7 @@
 	"compilerOptions": {
 		"target": "es2020",
 		"module": "ESNext",
-		"lib": [],
+		"lib": ["es2020"],
 		"allowJs": true,
 		"checkJs": true,
 		"outDir": "../server",

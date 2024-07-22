@@ -9,6 +9,7 @@
 #include "incl.hpp"
 #include "init.hpp"
 #include "io.hpp"
+#include "nodes/menu.hpp"
 
 int main(int argc, char** argv) {
 	gl::logfile = fopen("../stacktrace.log", "a");
@@ -18,9 +19,6 @@ int main(int argc, char** argv) {
 		/*  Test */
 		SDL_Window* window = SDL_CreateWindow("[Moderntale Redux]", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCR_WIDTH, SCR_HEIGHT, SDL_WINDOW_BORDERLESS);
 		SDL_Renderer* rend = SDL_CreateRenderer(window, -1, 0);
-		SDL_Texture* bg = IMG_LoadTexture(rend, path::bg::menu);
-		SDL_RenderCopy(rend, bg, NULL, NULL);
-		SDL_RenderPresent(rend);
 		for (;;) {
 			SDL_Event event;
 			while (SDL_PollEvent(&event)) {
@@ -29,6 +27,7 @@ int main(int argc, char** argv) {
 				}
 			}
 			SDL_Delay(16);
+			SDL_RenderPresent(rend);
 		}
 	} catch (ERROR E) {
 		switch (E) {

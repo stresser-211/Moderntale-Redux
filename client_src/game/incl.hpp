@@ -1,7 +1,7 @@
 ﻿#pragma once
 
-#define SCR_WIDTH 600
-#define SCR_HEIGHT 450
+#define SCR_WIDTH 800
+#define SCR_HEIGHT 600
 
 #include "../api"
 #include "../net_transfer/main.h"
@@ -51,7 +51,7 @@ namespace gl {
 namespace module {
 	const char* core = "CORE";
 	const char* error = "ERROR";
-	const char* ios = "IOS";
+	const char* ios = "IOSTREAM";
 	const char* audio = "AUDIO";
 	const char* render = "RENDER";
 	const char* net = "NET";
