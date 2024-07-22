@@ -1,0 +1,6 @@
+﻿Windows 7 64-bit
+Intel Celeron N2840
+2GB RAM
+No GPU required
+Internet connection
+777, 781 TCP ports opened
