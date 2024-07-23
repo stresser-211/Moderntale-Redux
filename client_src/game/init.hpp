@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "incl.hpp"
 
@@ -16,7 +16,6 @@ void CRC_init(void) {
 		gl::CRC_table[i] = CRC;
 	}
 }
-
 int init(void) {
 	if (SDL_Init(SDL_INIT_EVERYTHING) == -1) {
 		SDL_Quit(); goto ERR;

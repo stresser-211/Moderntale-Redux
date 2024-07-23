@@ -1,9 +1,9 @@
-﻿#pragma once
+#pragma once
 
 #include "../incl.hpp"
-#include "../room.hpp"
-#include "../button.hpp"
+#include "../nodes/room.hpp"
+#include "../nodes/button.hpp"
 
-class menu : _Room {
+class _Menu : _Room {
 public:
 };

@@ -7,19 +7,19 @@ TCPT := "TCP_transfer"
 EH := "NT_exc_handler"
 
 ; ---Key IDs--- ;
-left_id := 1001
-right_id := 1002
-up_id := 1003
-down_id := 1004
-jump_id := 1005
-run_id := 1006
-inventory_id := 1007
-confirm_id := 1008
-cancel_id := 1009
-escape_id := 1010
-chat_id := 1011
-tab_id := 1012
-debug_id := 1013
+left_id := "1001"
+right_id := "1002"
+up_id := "1003"
+down_id := "1004"
+jump_id := "1005"
+run_id := "1006"
+inventory_id := "1007"
+confirm_id := "1008"
+cancel_id := "1009"
+escape_id := "1010"
+chat_id := "1011"
+tab_id := "1012"
+debug_id := "1013"
 
 ; ---Code--- ;
 
@@ -28,7 +28,7 @@ if (init != 0)
 	DllCall(dll . "\" . EH, "Int", init)
 
 dll_result(key_id) {
-	result := DllCall(dll . "\" . TCPT, "Int", tcp, "Int", key_id)
+	result := DllCall(dll . "\" . TCPT, "Int", tcp, "String", key_id)
 	if (result != 0)
 		DllCall(dll . "\" . EH, "Int", result)
 	Return
@@ -51,9 +51,9 @@ T::dll_result(chat_id)
 F12::dll_result(debug_id)
 Tab::dll_result(tab_id)
 
-Left UP::dll_result(left_id * 2)
-Right UP::dll_result(right_id * 2)
-Up UP::dll_result(up_id * 2)
-Down UP::dll_result(down_id * 2)
-Shift UP::dll_result(run_id * 2)
-Tab UP::dll_result(tab_id * 2)
+Left UP::dll_result(left_id . "99")
+Right UP::dll_result(right_id . "99")
+Up UP::dll_result(up_id . "99")
+Down UP::dll_result(down_id . "99")
+Shift UP::dll_result(run_id . "99")
+Tab UP::dll_result(tab_id . "99")

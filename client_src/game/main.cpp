@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #pragma comment(lib, "shell32.lib")
 #pragma comment(lib, "SDL2.lib")
 #pragma comment(lib, "SDL2main.lib")
@@ -9,7 +9,7 @@
 #include "incl.hpp"
 #include "init.hpp"
 #include "io.hpp"
-#include "nodes/menu.hpp"
+#include "scenes/menu.hpp"
 
 int main(int argc, char** argv) {
 	gl::logfile = fopen("../stacktrace.log", "a");
@@ -19,6 +19,7 @@ int main(int argc, char** argv) {
 		/*  Test */
 		SDL_Window* window = SDL_CreateWindow("[Moderntale Redux]", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCR_WIDTH, SCR_HEIGHT, SDL_WINDOW_BORDERLESS);
 		SDL_Renderer* rend = SDL_CreateRenderer(window, -1, 0);
+		_render(rend, IMG_LoadTexture(rend, path::bg::menu));
 		for (;;) {
 			SDL_Event event;
 			while (SDL_PollEvent(&event)) {
@@ -27,7 +28,6 @@ int main(int argc, char** argv) {
 				}
 			}
 			SDL_Delay(16);
-			SDL_RenderPresent(rend);
 		}
 	} catch (ERROR E) {
 		switch (E) {
@@ -36,6 +36,7 @@ int main(int argc, char** argv) {
 			break;
 		case MISSING_ENGINE_FILE:
 		case INTEGRITY_VIOLATED:
+		case Z_ORDER:
 		default: break;
 		}
 	}

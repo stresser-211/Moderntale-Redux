@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #define SCR_WIDTH 800
 #define SCR_HEIGHT 600
@@ -40,7 +40,8 @@ enum ERROR {
 	MISSING_ENGINE_FILE,
 	MISSING_TEXTURE,
 	MISSING_AUDIO_FILE,
-	MISSING_FONT
+	MISSING_FONT,
+	Z_ORDER
 };
 /* Global varibles */
 namespace gl {
@@ -71,7 +72,7 @@ namespace path {
 		{"SDL2_mixer.dll",0x8FF78E0B},
 		{"SDL2_net.dll",0x3C0883EB},
 		{"SDL2_ttf.dll",0xE34AC27F},
-		{"x_input.exe",0x9432C704}
+		{"x_input.exe",0x21DF94C7}
 	};
 	namespace bg {
 		const char* menu = "../img/menu/bg.png";

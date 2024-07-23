@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "incl.hpp"
 #include "functions.hpp"
@@ -16,7 +16,6 @@ void stacktrace(const char* module, const char* msg, ...) {
 	va_end(args);
 	fprintf(gl::logfile, "\n");
 }
-
 int verify_integrity(void) {
 	CRC_init();
 	_iobuf* check;
@@ -33,7 +32,7 @@ int verify_integrity(void) {
 			stacktrace(module::error, "\"%s\" is corrupted. (CRC: %X, expected %X)", iter.first, CRC_check, iter.second);
 			throw INTEGRITY_VIOLATED;
 		};
-		stacktrace(module::core, "\"%s\" status: fine.", iter.first);
+		stacktrace(module::ios, "Reading \"%s\": the file is fine.", iter.first);
 		fclose(check);
 	}
 	return SUCCESS;

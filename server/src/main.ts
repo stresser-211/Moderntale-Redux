@@ -1,4 +1,4 @@
-﻿import * as net from 'net';
+import * as net from 'net';
 import { readProperties } from './read_properties';
 
 const port: number = 777;
@@ -8,7 +8,7 @@ const server = net.createServer((socket: net.Socket) => {
 
     socket.on('data', (data: Buffer) => {
         console.log('Received:', data.toString());
-        socket.write('Echo: ' + data);
+        socket.write('Echo: ' + data.toString());
     });
 
     socket.on('end', () => {
@@ -27,7 +27,7 @@ server.listen(port, async () => {
         const properties = await readProperties('data.json');
         console.log('Loaded properties:', properties);
     } catch (err) {
-        console.error(err);
+        console.error('Error reading properties:', err);
     }
 });
 
