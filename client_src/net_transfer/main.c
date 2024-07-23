@@ -1,40 +1,54 @@
-﻿#include "main.hpp"
+﻿#include "main.h"
+#include "consts.h"
 
-enum err_code {
-	INIT = 1
+enum error_codes {
+	SUCCESS,
+	INITIALISATION,
+	HOST_RESOLVING,
+	TCP_SOCKET
 };
 
-int net_init() {
+int net_init(void) {
 	if (SDLNet_Init(void) == -1) {
-		return INIT;
+		return INITIALISATION;
 	}
+	return SUCCESS;
 }
-int TCP_transfer(int port, char* datagram) {
+void net_quit(void) {
+    SDLNet_Quit();
+    SDL_Quit();
+}
+int TCP_transfer(int port, const char* datagram) {
     IPaddress ip;
     if (SDLNet_ResolveHost(&ip, "127.0.0.1", 1234) == -1) {
-        return 3;
+        return HOST_RESOLVING;
     }
     TCPsocket client = SDLNet_TCP_Open(&ip);
     if (!client) {
-        return 4;
+        return TCP_SOCKET;
     }
-    const char* message = "Hello, server!";
-    SDLNet_TCP_Send(client, message, strlen(message) + 1);
+    SDLNet_TCP_Send(client, datagram, strlen(datagram) + 1);
     char response[100];
     if (SDLNet_TCP_Recv(client, response, 100) > 0) {
         const char* aeaeae = response;
     }
     SDLNet_TCP_Close(client);
-    return 0;
+    return SUCCESS;
+}
+int TCP_transfer(int port, int datagram) {
+	char buffer[80];
+	sprintf(buffer, "%s", datagram);
+	TCP_transfer(port, buffer)
+	return SUCCESS;
 }
 void TCP_receive(int port) {
 	IPaddress ip;
 	if (SDLNet_ResolveHost(&ip, NULL, 1234) == -1) {
-        return 3;
+        return HOST_RESOLVING;
     }
 	TCPsocket server = SDLNet_TCP_Open(&ip);
     if (!server) {
-		return 4;
+		return TCP_SOCKET;
     }
     TCPsocket client;
     while (true) {
@@ -53,12 +67,9 @@ void TCP_receive(int port) {
 }
 void NT_exc_handler(int exc) {
 	switch (exc) {
-	case INIT: break;
+	case INITIALISATION: break;
+	case HOST_RESOLVING: break;
+	case TCP_SOCKET: break;
 	default: break;
 	}
-}
-
-void net_quit() {
-    SDLNet_Quit();
-    SDL_Quit();
 }
