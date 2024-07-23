@@ -33,7 +33,7 @@ int verify_integrity(void) {
 			stacktrace(module::error, "\"%s\" is corrupted. (CRC: %X, expected %X)", iter.first, CRC_check, iter.second);
 			throw INTEGRITY_VIOLATED;
 		};
-		stacktrace(module::ios, "\"%s\" status: fine.", iter.first);
+		stacktrace(module::core, "\"%s\" status: fine.", iter.first);
 		fclose(check);
 	}
 	return SUCCESS;

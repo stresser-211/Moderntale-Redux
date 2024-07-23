@@ -13,6 +13,7 @@ AutoHotKey v2.0.18
 
 ---Server---
 Node.js v13.14.0
+@types/node (npm install @types/node)
 Typescript 4.9.5 (npm install -g typescript@4.9.5)
 crypto-js 4.2.0 (npm install -g crypto-js@4.2.0)
 MySQL 2.18.1 (npm install -g mysql@2.18.1)

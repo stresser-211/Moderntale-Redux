@@ -1,0 +1,28 @@
+﻿{
+    "compilerOptions": {
+        "target": "es2020",
+        "module": "ESNext",
+        "lib": ["es2020"],
+        "allowJs": true,
+        "checkJs": true,
+        "outDir": "./dist",
+        "rootDir": "./src",
+        "moduleResolution": "node",
+        "composite": true,
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "strictFunctionTypes": true,
+        "noImplicitThis": true,
+        "alwaysStrict": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noImplicitReturns": true,
+        "noFallthroughCasesInSwitch": true,
+        "esModuleInterop": true,
+        "preserveSymlinks": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true
+    },
+    "include": ["src/**/*"],
+    "exclude": ["node_modules", "dist"]
+}

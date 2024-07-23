@@ -6,22 +6,23 @@
 #include "../api"
 #include "../net_transfer/main.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdint.h>
+#include <stdio.h> //
+#include <stdlib.h> //
+#include <string.h> //
+#include <stdint.h> //
 #include <math.h>
-#include <time.h>
+#include <time.h> //
 
 #include <algorithm>
-#include <utility>
+#include <utility> //
 #include <thread>
-#include <vector>
+#include <vector> //
+#include <set> //
 #include <type_traits>
 #include <ranges>
 
-#include <SDL.h>
-#include <SDL_image.h>
+#include <SDL.h> //
+#include <SDL_image.h> //
 #include <SDL_mixer.h>
 #include <SDL_ttf.h>
 
@@ -51,12 +52,11 @@ namespace gl {
 namespace module {
 	const char* core = "CORE";
 	const char* error = "ERROR";
+	const char* warning = "WARNING";
 	const char* ios = "IOSTREAM";
 	const char* audio = "AUDIO";
 	const char* render = "RENDER";
 	const char* net = "NET";
-	const char* key = "KEY";
-	const char* node = "NODE";
 }
 /* Paths */
 namespace path {
