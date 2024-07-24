@@ -1,6 +1,6 @@
 ﻿#include "main.h"
 
-char TCP_response[1024] = "No request has been made yet.";
+volatile char TCP_response[1024] = "No request has been made yet.";
 
 enum error_codes {
 	SUCCESS,
@@ -10,7 +10,7 @@ enum error_codes {
 };
 
 int net_init(void) {
-	if (SDLNet_Init(void) == -1) {
+	if (SDLNet_Init() == -1) {
 		return INITIALISATION;
 	}
 	return SUCCESS;
@@ -30,7 +30,6 @@ int TCP_transfer(int port, const char* datagram) {
 	}
 	SDLNet_TCP_Send(client, datagram, strlen(datagram) + 1);
 	if (SDLNet_TCP_Recv(client, TCP_response, 100) > 0) {
-		/* const char* secret_documents = hack_pentagon("MaoZedong"); */
 	}
 	SDLNet_TCP_Close(client);
 	return SUCCESS;
@@ -38,7 +37,7 @@ int TCP_transfer(int port, const char* datagram) {
 const char* get_TCP_response() {
 	return TCP_response;
 }
-int TCP_receive(int port) {
+int TCP_receive(int port, char* buffer) {
 	IPaddress ip;
 	if (SDLNet_ResolveHost(&ip, NULL, port) == -1) {
 		return HOST_RESOLVING;
@@ -51,10 +50,7 @@ int TCP_receive(int port) {
 	while (true) {
 		client = SDLNet_TCP_Accept(server);
 		if (client) {
-			char text[100];
-			if (SDLNet_TCP_Recv(client, text, 100) > 0) {
-				const char* reply = "Hello, client!";
-				SDLNet_TCP_Send(client, reply, strlen(reply) + 1);
+			if (SDLNet_TCP_Recv(client, buffer, 100) > 0) {
 			}
 		SDLNet_TCP_Close(client);
 		}

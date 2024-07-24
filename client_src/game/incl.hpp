@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #define SCR_WIDTH 800
 #define SCR_HEIGHT 600
@@ -38,9 +38,6 @@ enum ERROR {
 	INITIALISATION,
 	INTEGRITY_VIOLATED,
 	MISSING_ENGINE_FILE,
-	MISSING_TEXTURE,
-	MISSING_AUDIO_FILE,
-	MISSING_FONT,
 	Z_ORDER
 };
 /* Global varibles */
@@ -74,8 +71,11 @@ namespace path {
 		{"SDL2_ttf.dll",0xE34AC27F},
 		{"x_input.exe",0x21DF94C7}
 	};
-	namespace bg {
-		const char* menu = "../img/menu/bg.png";
+	namespace img {
+		const char* menu_bg = "../img/menu/bg.png";
+	}
+	namespace bgm {
+		const char* menu = "../bgm/menu.ogg";
 	}
 }
 /* Localisation */
@@ -100,6 +100,8 @@ namespace menu {
 	namespace settings {
 		std::vector<const char*> vsync {"[V-sync]","[Вертикальная синхронизация]","[Sincronizare verticală]"};
 		std::vector<const char*> custom_fps {"[Custom framerate]","[Пользовательская частота кадров]","[Rata de cadre personalizată]"};
+		std::vector<const char*> music_volume {"[Music volume]","[Громкость музыки]","[Volumul muzicii]"};
+		std::vector<const char*> sfx_volume {"[SFX volume]","[Громкость звуков]","[Volumul sunetelor]"};
 	}
 	namespace about {
 		std::vector<const char*> version {"Version:","Версия:","Versiune:"};

@@ -17,7 +17,6 @@ void stacktrace(const char* module, const char* msg, ...) {
 	fprintf(gl::logfile, "\n");
 }
 int verify_integrity(void) {
-	CRC_init();
 	_iobuf* check;
 	uint32_t CRC_check;
 	using namespace path;

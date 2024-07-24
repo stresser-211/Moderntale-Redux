@@ -9,17 +9,21 @@
 #include "incl.hpp"
 #include "init.hpp"
 #include "io.hpp"
+#include "asio.hpp"
+#include "nodes/object.hpp"
 #include "scenes/menu.hpp"
 
 int main(int argc, char** argv) {
 	gl::logfile = fopen("../stacktrace.log", "a");
 	try {
 		stacktrace(module::core, "Launched Moderntale Redux.");
-		verify_integrity(); init();
+		CRC_init(); verify_integrity(); init();
 		/*  Test */
 		SDL_Window* window = SDL_CreateWindow("[Moderntale Redux]", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCR_WIDTH, SCR_HEIGHT, SDL_WINDOW_BORDERLESS);
 		SDL_Renderer* rend = SDL_CreateRenderer(window, -1, 0);
-		_render(rend, IMG_LoadTexture(rend, path::bg::menu));
+		_Object* bg = create_object(rend, 1, path::img::menu_bg, 0, 0);
+		_render(rend, bg);
+		_oggplay(path::bgm::menu, -18.0f);
 		for (;;) {
 			SDL_Event event;
 			while (SDL_PollEvent(&event)) {
@@ -30,10 +34,8 @@ int main(int argc, char** argv) {
 			SDL_Delay(16);
 		}
 	} catch (ERROR E) {
-		switch (E) {
+		switch (E) { /* todo window popup*/
 		case INITIALISATION:
-			stacktrace(module::error, "SDL initialisation failed.");
-			break;
 		case MISSING_ENGINE_FILE:
 		case INTEGRITY_VIOLATED:
 		case Z_ORDER:

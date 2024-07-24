@@ -78,6 +78,9 @@ public:
 		this->rot = rot;
 		this->scale = scale;
 	}
+	SDL_Texture* get_texture(void) const {
+		return this->texture;
+	}
 };
 
 uint64_t _Object::count = 0;

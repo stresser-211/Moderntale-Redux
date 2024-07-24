@@ -18,8 +18,8 @@ uint32_t get_CRC(_iobuf* file) {
 	fclose(file);
 	return CRC ^ 0xFFFFFFFF;
 }
-void _render(SDL_Renderer* rend, SDL_Texture* txtr) {
-	SDL_RenderCopy(rend, txtr, NULL, NULL);
+void _render(SDL_Renderer* rend, _Object* obj) {
+	SDL_RenderCopy(rend, obj->get_texture(), NULL, NULL);
 	SDL_RenderPresent(rend);
 }
 _Object* create_object(SDL_Renderer* rend, uint_fast64_t z_order, const char* path, int x, int y) {
