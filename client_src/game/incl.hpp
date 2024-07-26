@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #define SCR_WIDTH 800
 #define SCR_HEIGHT 600
@@ -23,7 +23,7 @@
 
 #include <SDL.h> //
 #include <SDL_image.h> //
-#include <SDL_mixer.h>
+#include <SDL_mixer.h> //
 #include <SDL_ttf.h>
 
 const long double pi = 3.141592653589793; /* Should be enough */
@@ -74,5 +74,6 @@ namespace path {
 	}
 	namespace sfx {
 		const char* error = "../sfx/critical_error.ogg";
+		const char* quit = "../sfx/shutdown.ogg";
 	}
 }

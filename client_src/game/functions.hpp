@@ -31,3 +31,14 @@ _Object* create_object(SDL_Renderer* rend, uint_fast64_t z_order, const char* pa
 void destroy(_Object* ptr) {
 	if (ptr != nullptr) delete ptr;
 }
+bool was_clicked(_Object* obj, int mouse_x, int mouse_y) {
+	int txtrw, txtrh;
+	SDL_QueryTexture(obj->get_texture(), NULL, NULL, &txtrw, &txtrh);
+	auto [xpos, ypos] = obj->get_position();
+	if ((mouse_x >= xpos && mouse_x <= xpos + txtrw &&
+        mouse_y >= ypos && mouse_y <= ypos + txtrh)) {
+		return true;
+	}
+	return false;
+}
+

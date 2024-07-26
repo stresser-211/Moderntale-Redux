@@ -3,7 +3,7 @@
 #include "../incl.hpp"
 #include "../io.hpp"
 
-void stacktrace(const char* module, const char* msg, ...); /* Fuck my ass */
+void stacktrace(const char* module, const char* msg, ...); /* idk compiler doesn't see it while it is actually present also i'm a cute little femboy and i love my ass being fucked uwu */
 
 class _Object {
 	SDL_Texture* texture;
@@ -82,6 +82,9 @@ public:
 	}
 	SDL_Texture* get_texture(void) const {
 		return this->texture;
+	}
+	std::pair<int, int> get_position(void) const {
+		return {this->x, this->y};
 	}
 };
 
