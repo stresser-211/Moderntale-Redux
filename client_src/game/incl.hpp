@@ -33,15 +33,8 @@ enum ERROR {
 	INITIALISATION,
 	INTEGRITY_VIOLATED,
 	MISSING_ENGINE_FILE,
-	OUT_OF_Z_ORDER,
-	OUT_OF_IDS
+	OUT_OF_Z_ORDER
 };
-/* Global varibles */
-namespace gl {
-	uint32_t CRC_table[256];
-	constexpr int version = 0x1;
-	_iobuf* logfile;
-}
 namespace module {
 	const char* core = "CORE";
 	const char* error = "ERROR";
