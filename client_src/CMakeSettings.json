@@ -1,0 +1,15 @@
+﻿{
+  "configurations": [
+    {
+      "name": "x64-Debug",
+      "generator": "Ninja",
+      "configurationType": "Debug",
+      "inheritEnvironments": [ "msvc_x64_x64" ],
+      "buildRoot": "D:/DIMA/ALL/My projects/Games/Moderntale Redux/client/engine",
+      "installRoot": "D:/DIMA/ALL/My projects/Games/Moderntale Redux/client/engine",
+      "cmakeCommandArgs": "",
+      "buildCommandArgs": "",
+      "ctestCommandArgs": ""
+    }
+  ]
+}
