@@ -13,7 +13,7 @@ API int net_init(void);
 API void net_quit(void);
 API int TCP_transfer(int port, char* datagram);
 API const char* get_TCP_response();
-API int TCP_receive(int port);
+API int TCP_receive(int port, char* buffer);
 API void NT_exc_handler(int exc);
 
 #ifdef __cplusplus

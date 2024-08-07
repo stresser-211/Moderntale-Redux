@@ -1,2 +1,4 @@
 ﻿client/
 concepts/
+client_src/.vs
+client_src/out

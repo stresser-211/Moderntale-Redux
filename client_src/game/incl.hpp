@@ -6,27 +6,37 @@
 #include "../api"
 #include "../net_transfer/main.h"
 
-#include <stdio.h> //
-#include <stdlib.h> //
-#include <string.h> //
-#include <stdint.h> //
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdint.h>
+#include <stdarg.h>
 #include <math.h>
-#include <time.h> //
+#include <time.h>
 
+#include <utility>
 #include <algorithm>
-#include <utility> //
-#include <thread>
-#include <vector> //
-#include <set> //
+#include <vector>
+#include <set>
+#include <any>
 #include <type_traits>
-#include <ranges>
+#include <typeinfo>
+#include <thread>
 
-#include <SDL.h> //
-#include <SDL_image.h> //
-#include <SDL_mixer.h> //
+#include <SDL.h>
+#include <SDL_image.h>
+#include <SDL_mixer.h>
 #include <SDL_ttf.h>
 
-const long double pi = 3.141592653589793; /* Should be enough */
+#define obj_t auto* __restrict
+
+constexpr uint8_t MTX_version = 0x1;
+constexpr int_fast64_t operator""Z(unsigned long long i) {
+	return static_cast<int_fast64_t>(i);
+}
+const auto pi = 3.14159265358979323; /* Should be enough */
+const uint8_t _framerate = 60;
+const auto _duration = 1000 / _framerate;
 
 enum ERROR {
 	SUCCESS,
@@ -44,7 +54,6 @@ namespace module {
 	const char* render = "RENDER";
 	const char* net = "NET";
 }
-/* Paths */
 namespace path {
 	std::vector<std::pair<const char*, const uint32_t>> engine { /* path | CRC */
 		{"_internal/base_library.zip",0x3B0952F2},
@@ -60,7 +69,9 @@ namespace path {
 		{"x_input.exe",0x21DF94C7}
 	};
 	namespace img {
+		const char* null = "../img/null.png";
 		const char* menu_bg = "../img/menu/bg.png";
+		const char* menu_button = "../img/button/menu.png";
 	}
 	namespace bgm {
 		const char* menu = "../bgm/menu.ogg";

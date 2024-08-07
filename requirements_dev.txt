@@ -2,7 +2,7 @@
 git 2.38.1
 
 ---Client---
-MSVC 14.29.30133 (C++20, C11)
+MSVC 14.29.30133
 SDL2-devel-2.30.3-VC
 SDL2_image-devel-2.8.2-VC
 SDL2_mixer-devel-2.8.0-VC

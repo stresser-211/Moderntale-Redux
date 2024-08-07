@@ -4,6 +4,6 @@
 #include "../nodes/room.hpp"
 #include "../nodes/button.hpp"
 
-class _Menu : _Room {
+class _menu : _room {
 public:
 };

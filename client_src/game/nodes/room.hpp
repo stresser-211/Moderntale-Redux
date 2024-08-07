@@ -3,6 +3,6 @@
 #include "../incl.hpp"
 #include "object.hpp"
 
-class _Room : _Object {
+class _room : _object {
 public:
 };

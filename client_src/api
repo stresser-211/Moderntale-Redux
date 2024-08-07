@@ -1,4 +1,4 @@
-﻿#ifdef main
+#ifdef main
 #define API __declspec(dllimport)
 #else
 #define API __declspec(dllexport)

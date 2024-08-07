@@ -47,7 +47,7 @@ int TCP_receive(int port, char* buffer) {
 		return TCP_SOCKET;
 	}
 	TCPsocket client;
-	while (true) {
+	while (1) {
 		client = SDLNet_TCP_Accept(server);
 		if (client) {
 			if (SDLNet_TCP_Recv(client, buffer, 100) > 0) {
