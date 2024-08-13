@@ -29,21 +29,20 @@ def skin_unpack(skin):
 	tmp = os.path.join(os.getenv("TEMP"), "Moderntale Redux/", skin)
 	if (os.path.exists(tmp)):
 		return FILE_EXISTS
-	else:
-		os.makedirs(tmp, exist_ok=True)
-		with open(skin, "rb") as f:
-			content = f.read()
-		parts = content.split(b"SK!N&name<<")
-		for part in parts[1:]:
+	os.makedirs(tmp, exist_ok=True)
+	with open(skin, "rb") as f:
+		content = f.read()
+	parts = content.split(b"SK!N&name<<")
+	for part in parts[1:]:
 
-			delimiter_pos = part.find(b"?>>")
-			if (delimiter_pos == -1):
-				return CORRUPTED
-			filename = part[:delimiter_pos].decode("utf-8")
-			file_content = part[delimiter_pos + 3:]
-			file_path = tmp + "/" + filename
-			with open(file_path, "wb") as file:
-				file.write(file_content)
+		delimiter_pos = part.find(b"?>>")
+		if (delimiter_pos == -1):
+			return CORRUPTED
+		filename = part[:delimiter_pos].decode("utf-8")
+		file_content = part[delimiter_pos + 3:]
+		file_path = tmp + "/" + filename
+		with open(file_path, "wb") as file:
+			file.write(file_content)
 	return SUCCESS
 def main():
 	parser = argparse.ArgumentParser(description="Feet.")

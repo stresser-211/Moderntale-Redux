@@ -59,7 +59,7 @@ namespace path {
 		{"_internal/base_library.zip",0xD6CDE4E4},
 		{"_internal/python310.dll",0xD2698ACC},
 		//{"game.exe",0x},
-		{"skin_manager.exe",0x689B6344},
+		{"skin_manager.exe",0x7049A786},
 		//{"net_transfer.dll",0x},
 		{"SDL2.dll",0xADC3F513},
 		{"SDL2_image.dll",0x9AE4833C},
