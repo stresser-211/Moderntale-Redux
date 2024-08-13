@@ -1,0 +1,3 @@
+pack: -s any.skin -p ai.png tsvai.png drai.png
+unpack: -x any.skin
+list: -list

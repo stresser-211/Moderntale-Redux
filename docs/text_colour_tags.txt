@@ -1,0 +1,18 @@
+`§XX` colours the text until the next colour tag or end of line is reached.
+
+(no tag) -- grey
+§RD -- red
+§GR -- green
+§BL -- blue
+§AQ -- aqua
+§CN -- cyan
+§YL -- yellow
+§OG -- orange
+§PL -- purple
+§IG -- indigo
+§VT -- violent
+§WT -- white
+§BK - black
+§MT - magenta
+§PK -- pink
+§LM -- lime

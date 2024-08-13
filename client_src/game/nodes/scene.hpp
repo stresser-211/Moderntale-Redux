@@ -2,7 +2,8 @@
 
 #include "../incl.hpp"
 #include "object.hpp"
+#include "button.hpp"
 
-class _room : _object {
+class _scene {
 public:
 };

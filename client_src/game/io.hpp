@@ -28,7 +28,7 @@ int verify_integrity(void) {
 		}
 		CRC_check = get_CRC(check);
 		if (CRC_check != iter.second) {
-			stacktrace(module::error, "\"%s\" is corrupted. (CRC: %X, expected %X)", iter.first, CRC_check, iter.second);
+			stacktrace(module::error, "\"%s\" is corrupted. (CRC: \"%X\", \"%X\" expected)", iter.first, CRC_check, iter.second);
 			throw INTEGRITY_VIOLATED;
 		};
 		stacktrace(module::ios, "Reading \"%s\": the file is fine.", iter.first);

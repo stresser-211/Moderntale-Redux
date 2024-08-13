@@ -4,7 +4,8 @@
 #include "io.hpp"
 #include "asio.hpp"
 #include "nodes/object.hpp"
-#include "scenes/menu.hpp"
+#include "nodes/button.hpp"
+#include "nodes/scene.hpp"
 
 void FRAMERATE_DELAY(void) {
 	const auto start = SDL_GetTicks();
@@ -84,13 +85,13 @@ CLEANUP:
 		_destroy(iter.first);
 	}
 	_oggplay(path::sfx::quit, -18.0f);
-CLEANUP_ERR:
-	float alpha = 1.0f;
+	float alpha; alpha = 1.0f;
 	while (alpha > 0.0f) {
 		if (alpha < 0.0f) break;
 		SDL_SetWindowOpacity(window, alpha -= 0.01f);
 		SDL_Delay(35);
 	}
+CLEANUP_ERR:
 	{
 		SDL_Quit();
 		IMG_Quit();

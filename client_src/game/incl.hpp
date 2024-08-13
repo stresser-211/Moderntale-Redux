@@ -56,10 +56,10 @@ namespace module {
 }
 namespace path {
 	std::vector<std::pair<const char*, const uint32_t>> engine { /* path | CRC */
-		{"_internal/base_library.zip",0x3B0952F2},
+		{"_internal/base_library.zip",0xD6CDE4E4},
 		{"_internal/python310.dll",0xD2698ACC},
 		//{"game.exe",0x},
-		{"get_skin_list.exe",0xD932A50B},
+		{"skin_manager.exe",0x2D65E143},
 		//{"net_transfer.dll",0x},
 		{"SDL2.dll",0xADC3F513},
 		{"SDL2_image.dll",0x9AE4833C},
