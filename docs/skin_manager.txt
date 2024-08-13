@@ -1,3 +1,6 @@
-pack: -s any.skin -p ai.png tsvai.png drai.png
-unpack: -x any.skin
+specify the skin: -s any.skin
+pack: -p ein.png zwei.png drei.png
+unpack: -x
 list: -list
+
+Please insert the unique prefix (your nickname for example) into your custom skin name to avoid name conflicts.
