@@ -1,0 +1,2 @@
+﻿; This is the word filter example. Leave it blank if you don't need it.
+

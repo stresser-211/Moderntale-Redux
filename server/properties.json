@@ -1,0 +1,17 @@
+﻿{
+	"name": "§OGTest §WTserver",
+	"players": {
+		"total":  420,
+		"per_world":  5,
+	},
+	"random_encounters": {
+		"enable": true,
+		"chance": 10,
+	},
+	"ticks_per_second": 30,
+	"user_skins": true,
+	"require_password": true,
+	"word_filter": true,
+	"blacklist": false,
+	"whitelist": false
+}

@@ -1,8 +1,0 @@
-#ifdef main
-#define API __declspec(dllimport)
-#else
-#define API __declspec(dllexport)
-#endif
-
-#define TCP_SERVER 777
-#define TCP_CLIENT 781

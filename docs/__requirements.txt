@@ -1,0 +1,20 @@
+﻿<---System--->
+Windows 7 64-bit
+Intel Celeron N2840
+2GB RAM
+No GPU required
+Internet connection
+777, 781 TCP ports opened
+
+<---Development--->
+UTF-8 file encoding
+git 2.38.1
+MSVC 14.29.30133
+SDL2-devel-2.30.3-VC
+SDL2_image-devel-2.8.2-VC
+SDL2_mixer-devel-2.8.0-VC
+SDL2_ttf-devel-2.22.0-VC
+SDL2_net-devel-2.2.0-VC
+Python 3.10.6
+AutoHotKey v2.0.18
+

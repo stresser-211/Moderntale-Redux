@@ -1,21 +1,21 @@
-; — comments out all the text after the character
-@ — the word placeholder
-@[XX] — the word ends with `XX`
-[XX]@ — the word starts with `XX`
-@>[XX](N) — the word contains `XX` (specify the number of targets or leave it blank (`(1)` and `()` has the same effect))
-@<[XX](N) — same as above [reverse iterator]
-[XX~YY] — replace `XX` with `YY`
-[XX~YY#ZZ] — replace `XX` with `YY` if true, otherwise replace with `ZZ`
-[X1/X2/X3~Y1/Y2/Y3#Z1/Z2/Z3] — multiple replacement
-[&] — AND
-[|] — OR
-[^] — XOR
-[!] — NOT
-[%] — NAND
-[\] — escape sequence (to use `&|^!%~/\:;#` as characters)
-[?] — any character placeholder
-var: — declare or use `var`
-var:=[XX] — assign `XX` to `var`
-var:=[@]  — recursion works, too
+ï»¿; â€” comments out all the text after the character
+@ â€” the word placeholder
+@[XX] â€” the word ends with `XX`
+[XX]@ â€” the word starts with `XX`
+@>[XX](N) â€” the word contains `XX` (specify the number of targets or leave it blank to specify one)
+@<[XX](N) â€” same as above [reverse iterator]
+[XX~YY] â€” replace `XX` with `YY`
+[XX~YY#ZZ] â€” replace `XX` with `YY` if true, otherwise replace with `ZZ`
+[X1/X2/X3~Y1/Y2/Y3#Z1/Z2/Z3] â€” multiple replacement
+[&] â€” AND
+[|] â€” OR
+[^] â€” XOR
+[!] â€” NOT
+[%] â€” NAND
+[\] â€” escape sequence (to use `@[]()&|^!?%~/\+:;=#<>` as characters)
+[?] â€” any character placeholder
+[+] â€” pointer to itself
+var: â€” declare or use `var`
+var:=[XX] â€” assign `XX` to `var`
 
 Parameters do stack.

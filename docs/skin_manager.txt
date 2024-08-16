@@ -1,4 +1,4 @@
-specify the skin: -s any.skin
+﻿specify the skin: -s any.skin
 pack: -p ein.png zwei.png drei.png
 unpack: -x
 list: -list
