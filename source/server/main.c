@@ -2,6 +2,6 @@
 #include "filter.h"
 #include "hash.h"
 
-int main(void) {
+int main(int argc, char** argv) {
 	return 0;
 }

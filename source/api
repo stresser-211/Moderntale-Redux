@@ -1,0 +1,8 @@
+﻿#ifdef main
+#define API __declspec(dllimport)
+#else
+#define API __declspec(dllexport)
+#endif
+
+#define SERVER 777
+#define XINPUT 781
