@@ -1,5 +1,6 @@
 ﻿__concepts/
 client/
+!source/client
 tmp/
 source/out/
 source/.vs/
