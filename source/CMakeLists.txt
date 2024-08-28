@@ -15,37 +15,13 @@ set(CMAKE_COMPILE_PDB_OUTPUT_DIRECTORY "${OUT_DIR}/tmp")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${OUT_DIR}/tmp")
 set(CMAKE_PDB_OUTPUT_DIRECTORY "${OUT_DIR}/tmp")
 
-set(mtx "Moderntale_Redux")
-set(mtx_src
-	"client/game/nodes/button.hpp"
-	"client/game/nodes/object.hpp"
-	"client/game/nodes/scene.hpp"
-	"client/game/asio.hpp"
-	"client/game/functions.hpp"
-	"client/game/game.cpp"
-	"client/game/global.hpp"
-	"client/game/incl.hpp"
-	"client/game/init.hpp"
-	"client/game/io.hpp"
-	"client/game/locale.hpp"
-)
+set(mtx "mtx")
 set(tcp "net_transfer")
-set(tcp_src
-	"net_transfer/consts.h"
-	"net_transfer/main.h"
-	"net_transfer/main.c"
-)
 set(srv "server")
-set(srv_src
-	"server/filter.h"
-	"server/hash.h"
-	"server/incl.h"
-	"server/main.c"
-)
 
-add_library(${tcp} SHARED ${tcp_src})
-add_executable(${mtx} ${mtx_src})
-add_executable(${srv} ${srv_src})
+add_library(${tcp} SHARED "net_transfer/main.c")
+add_executable(${mtx} "client/game/game.cpp")
+add_executable(${srv} "server/main.c")
 
 target_link_options(${mtx} PRIVATE
 	"/SUBSYSTEM:WINDOWS"

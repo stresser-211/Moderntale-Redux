@@ -56,9 +56,9 @@ int TCP_receive(int port, char* buffer) {
 		if (client) {
 			if (SDLNet_TCP_Recv(client, buffer, 100) > 0) {
 			}
-		SDLNet_TCP_Close(client);
+			SDLNet_TCP_Close(client);
 		}
-	delay(16);
+		delay(16);
 	}
 	SDLNet_TCP_Close(server);
 	return SUCCESS;

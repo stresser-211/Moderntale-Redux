@@ -5,44 +5,49 @@
 enum struct LOCALE {
 	EN,
 	RU,
-	MD
+	MD,
+	_END
 };
 
+using locale_base_t = std::array<const char*, static_cast<size_t>(LOCALE::_END)>;
+
+#define locale_t constexpr locale_base_t
+
 namespace menu {
-	namespace main {
-		std::vector<const char*> play {"[Play]","[Играть]","[Joacă]"};
-		std::vector<const char*> settings {"[Settings]","[Настройки]","[Setări]"};
-		std::vector<const char*> about {"[About]","[Об игре]","[Despre joc]"};
-		std::vector<const char*> quit {"[Quit]","[Выйти]","[Ieși]"};
-		std::vector<const char*> quit_confirm {"Quit the game?","Покинуть игру?","Să ieși de la joc?"};
-		std::vector<const char*> version {"Version:","Версия:","Versiune:"};
+	namespace start {
+		locale_t play = {"[Play]", "[Играть]", "[Joacă]"};
+		locale_t settings = {"[Settings]","[Настройки]","[Setări]"};
+		locale_t about = {"[About]","[Об игре]","[Despre joc]"};
+		locale_t quit = {"[Quit]","[Выйти]","[Ieși]"};
+		locale_t quit_confirm = {"Quit the game?","Покинуть игру?","Să ieși de la joc?"};
+		locale_t version = {"Version:","Версия:","Versiune:"};
 	}
 	namespace multiplayer {
-		std::vector<const char*> add {"[Add a server]","[Добавить сервер]","[Adaugă un server]"};
-		std::vector<const char*> direct_connect {"[Direct connect]","[Подключиться]","[Conectarea directă]"};
-		std::vector<const char*> remove {"[Remove the server]","[Убрать сервер]","[Elimină serverul]"};
-		std::vector<const char*> refresh {"[Refresh]","[Обновить]","[Actualizare]"};
-		std::vector<const char*> bookmark {"[Add to favourites]","[Добавить в избранное]","[Adaugă la favorite]"};
-		std::vector<const char*> connecting {"Connecting","Подключаемся","Ne conectăm"};
-		std::vector<const char*> connection_error {"Connection error:","Ошибка подключения:","Eroară de conectare:"};
+		locale_t add = {"[Add a server]","[Добавить сервер]","[Adaugă un server]"};
+		locale_t direct_connect = {"[Direct connect]","[Подключиться]","[Conectarea directă]"};
+		locale_t remove = {"[Remove the server]","[Убрать сервер]","[Elimină serverul]"};
+		locale_t refresh = {"[Refresh]","[Обновить]","[Actualizare]"};
+		locale_t bookmark = {"[Add to favourites]","[Добавить в избранное]","[Adaugă la favorite]"};
+		locale_t connecting = {"Connecting","Подключаемся","Ne conectăm"};
+		locale_t connection_error = {"Connection error:","Ошибка подключения:","Eroară de conectare:"};
 	}
 	namespace settings {
-		std::vector<const char*> vsync {"[V-sync]","[Вертикальная синхронизация]","[Sincronizare verticală]"};
-		std::vector<const char*> custom_fps {"[Custom framerate]","[Пользовательская частота кадров]","[Rata de cadre personalizată]"};
-		std::vector<const char*> music_volume {"[Music volume]","[Громкость музыки]","[Volumul muzicii]"};
-		std::vector<const char*> sfx_volume {"[SFX volume]","[Громкость звуков]","[Volumul sunetelor]"};
+		locale_t vsync = {"[V-sync]","[Вертикальная синхронизация]","[Sincronizare verticală]"};
+		locale_t custom_fps = {"[Custom framerate]","[Пользовательская частота кадров]","[Rata de cadre personalizată]"};
+		locale_t music_volume = {"[Music volume]","[Громкость музыки]","[Volumul muzicii]"};
+		locale_t sfx_volume = {"[SFX volume]","[Громкость звуков]","[Volumul sunetelor]"};
 	}
 	namespace about {
-		std::vector<const char*> version {"Version:","Версия:","Versiune:"};
-		std::vector<const char*> developed_with{"Developed with:","Разработано с использованием:","Dezvoltat folosind:"};
-		std::vector<const char*> thanks_to {"Special thanks:","Особые благодарности:","Mulțumiri speciale:"};
+		locale_t version = {"Version:","Версия:","Versiune:"};
+		locale_t developed_with = {"Developed with:","Разработано с использованием:","Dezvoltat folosind:"};
+		locale_t thanks_to = {"Special thanks:","Особые благодарности:","Mulțumiri speciale:"};
 	}
 }
 namespace popup {
-	std::vector<const char*> yes {"[Yes]","[Да]","[Da]"};
-	std::vector<const char*> no {"[No]","[Нет]","[Nu]"};
-	std::vector<const char*> ok {"[Got it]","[Понятно]","[Am înțeles]"};
-	std::vector<const char*> info {"[Information]","[Информация]","[Informație]"};
-	std::vector<const char*> warning {"[Warning!]","[Внимание!]","[Atenție!]"};
-	std::vector<const char*> error {"[Error!]","[Ошибка!]","[Eroară!]"};
+	locale_t yes = {"[Yes]","[Да]","[Da]"};
+	locale_t no = {"[No]","[Нет]","[Nu]"};
+	locale_t ok = {"[Got it]","[Понятно]","[Am înțeles]"};
+	locale_t info = {"[Information]","[Информация]","[Informație]"};
+	locale_t warning = {"[Warning!]","[Внимание!]","[Atenție!]"};
+	locale_t error = {"[Error!]","[Ошибка!]","[Eroară!]"};
 }

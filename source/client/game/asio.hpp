@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include "incl.hpp"
-#include "io.hpp"
+#include "utility.hpp"
 
 class _Mus {
 public:

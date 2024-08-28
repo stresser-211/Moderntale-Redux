@@ -6,7 +6,8 @@
 	},
 	"random_encounters": {
 		"enable": true,
-		"chance": 10,
+		"chance": 12.5,
+		"delay_ts": 200,
 	},
 	"ticks_per_second": 30,
 	"user_skins": true,

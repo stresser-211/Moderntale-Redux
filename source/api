@@ -6,3 +6,8 @@
 
 #define SERVER 777
 #define XINPUT 781
+
+#define MTX_version 0x1
+
+#undef CONST
+#define API_H
