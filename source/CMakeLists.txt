@@ -33,7 +33,10 @@ target_link_options(${srv} PRIVATE
 	"/SUBSYSTEM:CONSOLE"
 )
 
-include_directories("D:/DIMA/ALL/SDK/SDL2/include")
+include_directories(
+	"D:/DIMA/ALL/SDK/SDL2/include"
+	"D:/DIMA/ALL/SDK/parson"
+)
 
 target_link_libraries(${tcp} PUBLIC
 	"D:/DIMA/ALL/SDK/SDL2/lib/x64/SDL2_net.lib"

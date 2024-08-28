@@ -7,6 +7,6 @@ char cmdbuf[144];
 int main(int argc, char** argv) {
 	if (argc > 1) { }
 	puts(">");
-	scanf(cmdbuf);
+	system("pause");
 	return 0;
 }

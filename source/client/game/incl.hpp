@@ -76,7 +76,7 @@ namespace path {
 		std::make_pair("_internal/base_library.zip", 0xD6CDE4E4),
 		std::make_pair("_internal/python310.dll",0xD2698ACC),
 		std::make_pair("skin_manager.exe",0xC714932),
-		std::make_pair("net_transfer.dll",0x0), //temp
+		std::make_pair("net_transfer.dll",0x254F0BA),
 		std::make_pair("SDL2.dll",0xADC3F513),
 		std::make_pair("SDL2_image.dll",0x9AE4833C),
 		std::make_pair("SDL2_mixer.dll",0x8FF78E0B),

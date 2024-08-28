@@ -1,7 +1,7 @@
 ﻿#ifndef JSON_H
 #define JSON_H
 
-#include "j/parson.h"
+#include <parson.h>
 
 enum JSONFILE {
 	PROPS,
