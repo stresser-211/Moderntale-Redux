@@ -5,6 +5,11 @@
 #include "node/basic_objects.hpp"
 #include "node/scene.hpp"
 
+struct {
+	int x;
+	int y;
+} mouse;
+
 int main(int argc, char** argv) {
 	gl::logfile = fopen("../stacktrace.log", "a");
 	SDL_Window* window; SDL_Renderer* rend;
@@ -14,6 +19,7 @@ int main(int argc, char** argv) {
 
 		window = SDL_CreateWindow("[Moderntale Redux]", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCR_WIDTH, SCR_HEIGHT, SDL_WINDOW_BORDERLESS);
 		rend = SDL_CreateRenderer(window, -1, 0); SDL_SetRenderDrawColor(rend, 255, 255, 255, 255);
+		SDL_Event event;
 		
 		/* TODO something with this abomination. */
 		_scene MainMenu(rend);
@@ -21,15 +27,13 @@ int main(int argc, char** argv) {
 		MainMenu.create_object<_button>(50, 50, 420Z, path::img::menu_button);
 		MainMenu.get<_button>(420Z)->move_to(40, 460);
 		MainMenu.rerender();
-		_oggplay(path::bgm::menu, -18.0f);
+		snd_loop(path::bgm::menu, CH_MUS);
 		for (;;) {
-			SDL_Event event;
+			SDL_GetMouseState(&mouse.x, &mouse.y);
 			while (SDL_PollEvent(&event)) {
 				switch (event.type) {
 				case SDL_MOUSEBUTTONDOWN:
-					int x, y;
-					SDL_GetMouseState(&x, &y);
-					if (MainMenu.get<_button>(420Z)->was_clicked(x, y)) {
+					if (MainMenu.get<_button>(420Z)->was_clicked(mouse.x, mouse.y)) {
 						goto CLEANUP;
 					}
 					break;
@@ -38,7 +42,7 @@ int main(int argc, char** argv) {
 			FRAMERATE_DELAY();
 		}
 	} catch (ERROR E) {
-		if (E != INITIALISATION) _oggplay(path::sfx::error, -18.0f);
+		if (E != INITIALISATION) snd_play(path::sfx::error, CH_MUS);
 		switch (E) {
 		case INITIALISATION:
 			ERROR_CRIT("Initialisation error.");
@@ -57,7 +61,8 @@ int main(int argc, char** argv) {
 		goto CLEANUP_ERR;
 	}
 CLEANUP:
-	_oggplay(path::sfx::quit, -18.0f);
+	snd_stop(CH_ALL);
+	snd_play(path::sfx::quit, CH_MUS);
 	float alpha; alpha = 1.0f;
 	while (alpha > 0.0f) {
 		if (alpha < 0.0f) break;

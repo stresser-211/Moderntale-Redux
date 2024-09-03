@@ -12,14 +12,15 @@ class _scene : _object {
 public:
 	std::map<int_fast64_t, obj_t> objects;
 
-	_scene() = delete;
+	_scene(void) = delete;
 	_scene(SDL_Renderer* rend) : _object(rend, INT_FAST64_MIN, NULL, NULL, NULL, NULL, NULL, NULL) , rend(rend) {
 		id++;
 	}
-	~_scene() {
-		for (decltype(auto) iter : objects) {
-			destroy(iter);
-		}
+	~_scene(void) {
+		std::for_each(objects.begin(), objects.end(), [&](auto obj) {
+			destroy(obj.second);
+		});
+		objects.clear();
 	}
 
 	/* Render */
@@ -59,16 +60,28 @@ public:
 	template <obj_allowed_t T> void create_object(T* obj) {
 		objects.emplace(std::make_pair(obj->uniquify_z_order(), obj_t(obj)));
 	}
-	void destroy(auto obj) {
-		if (obj.second.has_value()) {
-			if (obj.second.type() == typeid(_object*)) {
-				delete std::any_cast<_object*>(obj.second);
+	void destroy(int_fast64_t key) {
+		decltype(auto) obj = objects.find(key);
+		if (obj->second.has_value()) {
+			if (obj->second.type() == typeid(_object*)) {
+				delete std::any_cast<_object*>(obj->second);
 			} else {
-				delete std::any_cast<_button*>(obj.second);
+				delete std::any_cast<_button*>(obj->second);
 			}
-			objects.find(obj.first);
-			obj.second.reset();
 		}
+	}
+	void destroy(obj_t obj) {
+		if (obj.has_value()) {
+			if (obj.type() == typeid(_object*)) {
+				delete std::any_cast<_object*>(obj);
+			} else {
+				delete std::any_cast<_button*>(obj);
+			}
+		}
+	}
+	void remove(int_fast64_t key) {
+		destroy(key);
+		objects.erase(key);
 	}
 	template <obj_allowed_t T> auto get(int_fast64_t z) {
 		return std::any_cast<T*>(objects[objects.find(z)->first]);

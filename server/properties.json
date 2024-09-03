@@ -14,5 +14,7 @@
 	"require_password": true,
 	"word_filter": true,
 	"blacklist": false,
-	"whitelist": false
+	"whitelist": false,
+	"timeout": 0,
+	"logs": false
 }

@@ -22,7 +22,8 @@
 #include <any>
 #include <type_traits>
 #include <typeinfo>
-#include <thread> //
+#include <thread>
+#include <atomic>
 
 #include <SDL.h>
 #include <SDL_image.h>
@@ -44,14 +45,16 @@ enum ERROR {
 };
 namespace module {
 	cxstr_t core = "CORE";
-	cxstr_t error = "ERROR";
-	cxstr_t warning = "WARNING";
+	cxstr_t warn = "WARNING";
 	cxstr_t ios = "IOSTREAM";
 	cxstr_t audio = "AUDIO";
 	cxstr_t render = "RENDER";
 	cxstr_t net = "NET";
 }
 namespace gl {
+	namespace font {
+		TTF_Font* noto = TTF_OpenFont(".. /font/noto.ttf", 14);
+	}
 	static constexpr std::array<uint32_t, 256>(*CRC_init)(void) = [](void) {
 		uint32_t CRC;
 		std::array<uint32_t, 256> table = {};
@@ -70,6 +73,7 @@ namespace gl {
 	};
 	constexpr std::array<uint32_t, 256> CRC_table = CRC_init();
 	_iobuf* logfile;
+	constinit float dB = -16.0f; //default
 }
 namespace path {
 	constexpr std::array<std::pair<const char*, const uint32_t>, 10> engine { /* path | CRC */

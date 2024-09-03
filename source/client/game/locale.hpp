@@ -9,9 +9,7 @@ enum struct LOCALE {
 	_END
 };
 
-using locale_base_t = std::array<const char*, static_cast<size_t>(LOCALE::_END)>;
-
-#define locale_t constexpr locale_base_t
+#define locale_t constexpr std::array<const char*, static_cast<size_t>(LOCALE::_END)>
 
 namespace menu {
 	namespace start {
@@ -33,7 +31,6 @@ namespace menu {
 	}
 	namespace settings {
 		locale_t vsync = {"[V-sync]","[Вертикальная синхронизация]","[Sincronizare verticală]"};
-		locale_t custom_fps = {"[Custom framerate]","[Пользовательская частота кадров]","[Rata de cadre personalizată]"};
 		locale_t music_volume = {"[Music volume]","[Громкость музыки]","[Volumul muzicii]"};
 		locale_t sfx_volume = {"[SFX volume]","[Громкость звуков]","[Volumul sunetelor]"};
 	}

@@ -2,3 +2,5 @@
 tmp/
 source/out/
 source/.vs/
+client/stacktrace.log
+server/stacktrace.log

@@ -14,7 +14,7 @@ class _object {
 			texture = NULL;
 		}
 		if (!texture) {
-			stacktrace(module::warning, "Couldn't load \"%s\". Object discarded.", image_path);
+			stacktrace(module::warn, "Couldn't load \"%s\". Object discarded.", image_path);
 			obj_count.erase(z_order);
 		} else {
 			SDL_QueryTexture(texture, NULL, NULL, &rect.w, &rect.h);
@@ -37,19 +37,18 @@ protected:
 	static int_fast64_t insert_z_order(int_fast64_t z_order) {
 		if (z_order != 0) {
 			if (obj_count.find(z_order) != obj_count.end()) {
-				stacktrace(module::warning, "z_order (%lld) is already in use. New unique z_order: %lld", z_order, uniquify_z_order(z_order));
+				stacktrace(module::warn, "z_order (%lld) is already in use. New unique z_order: %lld", z_order, uniquify_z_order(z_order));
 				if (z_order == 0) {
-					stacktrace(module::warning, "No free z_order left. Object discarded.");
+					stacktrace(module::warn, "No free z_order left. Object discarded.");
 					obj_count.erase(z_order);
 					throw OUT_OF_Z_ORDER;
 				}
 			}
 			obj_count.insert(z_order);
 			return z_order;
-		} else {
-			stacktrace(module::warning, "Attempted to use zero as a z_order (reserved for player). Object discarded.");
-			throw OUT_OF_Z_ORDER;
 		}
+		stacktrace(module::warn, "Attempted to use zero as a z_order (reserved for player). Object discarded.");
+		throw OUT_OF_Z_ORDER;
 	}
 	static int_fast64_t uniquify_z_order(int_fast64_t& z_order) {
 		if (z_order >= 0) {
@@ -73,7 +72,7 @@ protected:
 		return 0;
 	}
 public:
-	void uniquify_z_order() {
+	void uniquify_z_order(void) {
 		uniquify_z_order(this->z_order);
 	}
 	_object(void) = delete;
@@ -125,7 +124,7 @@ public:
 class _button : public _object {
 	TTF_Font* font;
 public:
-	_button() = delete;
+	_button(void) = delete;
 	_button(SDL_Renderer* rend, int_fast64_t z_order, const char* image, int64_t x, int64_t y, uint8_t alpha, uint16_t rot, float scale)
 		: _object(rend, z_order, image, x, y, alpha, rot, scale) {
 	}
@@ -143,6 +142,10 @@ public:
 
 class _sequence : _object {
 public:
+	_sequence(void) = delete;
+	~_sequence(void) {
+		int a;
+	}
 };
 
 std::set<int_fast64_t> _object::obj_count {
