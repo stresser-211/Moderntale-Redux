@@ -16,6 +16,8 @@
 
 #include <utility>
 #include <algorithm>
+#include <functional>
+#include <vector>
 #include <array>
 #include <set>
 #include <map>
@@ -23,7 +25,6 @@
 #include <type_traits>
 #include <typeinfo>
 #include <thread>
-#include <atomic>
 
 #include <SDL.h>
 #include <SDL_image.h>
@@ -32,16 +33,12 @@
 
 #define cxstr_t constexpr const char*
 
-using obj_t = std::any;
-
-constexpr auto pi = 3.14159265358979323; /* Should be enough */
-
 enum ERROR {
 	SUCCESS,
 	INITIALISATION,
 	INTEGRITY_VIOLATED,
 	MISSING_ENGINE_FILE,
-	OUT_OF_Z_ORDER
+	OBJECT_LIMIT_REACHED
 };
 namespace module {
 	cxstr_t core = "CORE";
@@ -52,9 +49,9 @@ namespace module {
 	cxstr_t net = "NET";
 }
 namespace gl {
-	namespace font {
+	/*namespace font {
 		TTF_Font* noto = TTF_OpenFont(".. /font/noto.ttf", 14);
-	}
+	}*/
 	static constexpr std::array<uint32_t, 256>(*CRC_init)(void) = [](void) {
 		uint32_t CRC;
 		std::array<uint32_t, 256> table = {};
@@ -73,14 +70,15 @@ namespace gl {
 	};
 	constexpr std::array<uint32_t, 256> CRC_table = CRC_init();
 	_iobuf* logfile;
-	constinit float dB = -16.0f; //default
+	constinit float dB = -16.0f;
+	constexpr uint16_t framerate = 60;
 }
 namespace path {
 	constexpr std::array<std::pair<const char*, const uint32_t>, 10> engine { /* path | CRC */
 		std::make_pair("_internal/base_library.zip", 0xD6CDE4E4),
 		std::make_pair("_internal/python310.dll",0xD2698ACC),
 		std::make_pair("skin_manager.exe",0xC714932),
-		std::make_pair("net_transfer.dll",0x254F0BA),
+		std::make_pair("net_transfer.dll",0x3C29C5C0),
 		std::make_pair("SDL2.dll",0xADC3F513),
 		std::make_pair("SDL2_image.dll",0x9AE4833C),
 		std::make_pair("SDL2_mixer.dll",0x8FF78E0B),
@@ -100,4 +98,7 @@ namespace path {
 		cxstr_t error = "../sfx/critical_error.ogg";
 		cxstr_t quit = "../sfx/shutdown.ogg";
 	}
+}
+namespace math {
+	constexpr float pi = 3.14159265358979323; /* Should be enough */
 }

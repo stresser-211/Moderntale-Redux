@@ -3,7 +3,9 @@
 #include "incl.hpp"
 #include "utility.hpp"
 
-constinit static std::atomic<bool> run = true;
+constinit static bool run = true;
+
+static std::vector<Mix_Chunk*> audio_chunks;
 
 enum CHANNEL {
 	CH_MUS,
@@ -11,17 +13,44 @@ enum CHANNEL {
 	CH_ALL = -1
 };
 
+void snd_stop(CHANNEL channel) {
+	switch (channel) {
+	default:
+		run = false;
+		Mix_FreeChunk(audio_chunks.back());
+		audio_chunks.pop_back();
+		break;
+	case CH_ALL:
+		run = false;
+		std::for_each(audio_chunks.begin(), audio_chunks.end(), [](auto chunk) {
+			Mix_FreeChunk(chunk);
+		});
+		audio_chunks.clear();
+		break;
+	}
+}
 void snd_play(const char* path, CHANNEL channel, bool log = true) {
+	auto cleanup = []() {
+		run = false;
+		if (!audio_chunks.empty()) {
+			Mix_FreeChunk(audio_chunks.back());
+			audio_chunks.pop_back();
+		}
+	};
+	int ch = channel;
+	if (Mix_Playing(channel)) {
+		snd_stop(channel);
+	}
 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) == -1) {
 		if (log) stacktrace(module::audio, "Couldn't open audio device: %s", Mix_GetError());
-		run = false; return;
+		cleanup(); return;
 	}
-	Mix_AllocateChannels(0x10);
 	Mix_Chunk* audio = Mix_LoadWAV(path);
 	if (!audio) {
-		if (log) stacktrace(module::audio, "Couldn't load audio file: %s", path);
-		run = false; return;
+		if (log) stacktrace(module::audio, "Couldn't load audio file: %s (%s)", Mix_GetError(), path);
+		cleanup(); return;
 	}
+	audio_chunks.emplace(audio_chunks.begin(), audio);
 	int(*dB_to_volume)(void) = [](void) {
 		float linear = expf(gl::dB * 0.115129254f); //pow(10.0f, gl::dB / 20.0f);
 		int volume = static_cast<int>(linear * MIX_MAX_VOLUME);
@@ -37,14 +66,13 @@ void snd_play(const char* path, CHANNEL channel, bool log = true) {
 		}
 	};
 	Mix_VolumeChunk(audio, dB_to_volume());
-	if (channel == CH_MUS) {
+	if (ch == CH_MUS) {
 		play(CH_MUS);
-		return;
+		goto PLAYING;
 	}
-	int ch = CH_MUS;
 	while (1) {
 		if (ch == 0x11) {
-			if (log) stacktrace(module::audio, "All the channels are busy. Audio discarded.");
+			if (log) stacktrace(module::audio, "All channels are busy. Audio discarded.");
 			break;
 		}
 		if (Mix_Playing(ch)) {
@@ -52,22 +80,20 @@ void snd_play(const char* path, CHANNEL channel, bool log = true) {
 		}
 		play(ch); break;
 	}
-	Mix_FreeChunk(audio);
+PLAYING:
+	while (Mix_Playing(ch)) {
+		FRAMERATE_DELAY();
+	}
+	cleanup();
 }
-auto snd_loop(const char* path, CHANNEL channel) {
-	run = true;
-	stacktrace(module::audio, "Playing \"%s\".", path);
-	return std::thread([&]() {
+void snd_loop(const char* path, CHANNEL channel) {
+	std::thread([&]() {
+		run = true;
+		stacktrace(module::audio, "Playing \"%s\".", path);
 		do {
 			if (Mix_Playing(channel) != 1) {
 				snd_play(path, channel, false);
 			}
 		} while (run);
 	}).detach();
-}
-void snd_stop(CHANNEL channel) {
-	if (channel == CH_MUS || channel == CH_ALL) {
-		run = false;
-	}
-	Mix_HaltChannel(channel);
 }

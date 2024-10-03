@@ -9,5 +9,4 @@
 
 #define MTX_version 0x1
 
-#undef CONST
 #define API_H

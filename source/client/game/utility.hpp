@@ -2,12 +2,11 @@
 
 #include "incl.hpp"
 
-constexpr auto _const_framerate = 60;
-constexpr static auto _const_duration = 1000 / _const_framerate;
+static uint16_t duration = 1000 / gl::framerate;
 
 template <typename T> concept is_number = std::is_arithmetic_v<T> && !std::is_same_v<bool, T>;
 template <typename T> concept is_positive = is_number<T> && requires(T a) {
-	{ std::cmp_greater(a, 0u) };
+	std::cmp_greater(a, 0u);
 };
 
 constexpr inline int_fast64_t operator""Z(unsigned long long i) {
@@ -16,12 +15,12 @@ constexpr inline int_fast64_t operator""Z(unsigned long long i) {
 void FRAMERATE_DELAY(void) {
 	const auto start = SDL_GetTicks();
 	auto frame_time = SDL_GetTicks() - start;
-	if (frame_time < _const_duration) {
-		SDL_Delay(_const_duration - frame_time);
+	if (frame_time < duration) {
+		SDL_Delay(duration - frame_time);
 	}
 };
 inline void ERROR_CRIT(const char* msg) {
-	SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "(see stacktrace.log for the details)", msg, NULL);
+	SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "(see stacktrace.log for details)", msg, NULL);
 };
 void stacktrace(const char* module, const char* msg, ...) {
 	time_t get_time = time(NULL);
@@ -39,23 +38,21 @@ void stacktrace(const char* module, const char* msg, ...) {
 int init(void) {
 	if (SDL_Init(SDL_INIT_EVERYTHING) == -1) {
 		stacktrace(module::core, "SDL initialisation failed: %s.", SDL_GetError());
-		SDL_Quit(); goto ERR;
+		throw INITIALISATION;
 	}
 	if (IMG_Init(IMG_INIT_PNG) == -1) {
 		stacktrace(module::core, "SDL_image initialisation failed: %s.", IMG_GetError());
-		IMG_Quit(); goto ERR;
+		throw INITIALISATION;
 	}
 	if (Mix_Init(MIX_INIT_OGG) == -1) {
 		stacktrace(module::core, "SDL_mixer initialisation failed: %s.", Mix_GetError());
-		Mix_Quit(); goto ERR;
+		throw INITIALISATION;
 	}
 	if (TTF_Init() == -1) {
 		stacktrace(module::core, "SDL_ttf initialisation failed: %s.", TTF_GetError());
-		TTF_Quit(); goto ERR;
+		throw INITIALISATION;
 	}
 	return SUCCESS;
-ERR:
-	throw INITIALISATION;
 }
 uint32_t get_CRC(_iobuf* file) {
 	uint32_t CRC = 0xFFFFFFFF;
