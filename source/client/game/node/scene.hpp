@@ -81,7 +81,7 @@ public:
 
 	/* Object management */
 public:
-	template <obj_allowed_t T> void create_object(int x, int y, int_fast64_t z_order = 1Z, const char* path = path::img::null, uint8_t alpha = ((uint8_t)255), uint16_t rot = ((uint16_t)0), float scale = 100.0f) {
+	template <obj_allowed_t T> void create_object(int x, int y, int_fast64_t z_order = 1Z, const char* path = path::img::null, uint8_t alpha = 255, uint16_t rot = 0, float scale = 100.0f) {
 		objects.emplace(std::make_pair(z_order, std::any(new T(rend, z_order, path, x, y, alpha, rot, scale))));
 	}
 	template <obj_allowed_t T> void create_object(T* obj) {

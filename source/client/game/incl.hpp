@@ -6,24 +6,27 @@
 #include "../../api"
 #include "../../net_transfer/main.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdint.h>
-#include <stdarg.h>
-#include <math.h>
-#include <time.h>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <cstdint>
+#include <cstdarg>
+#include <cmath>
 
 #include <utility>
 #include <algorithm>
 #include <functional>
+#include <random>
+
 #include <vector>
 #include <array>
 #include <set>
 #include <map>
 #include <any>
+
 #include <type_traits>
 #include <typeinfo>
+
 #include <thread>
 
 #include <SDL.h>
@@ -70,8 +73,14 @@ namespace gl {
 	};
 	constexpr std::array<uint32_t, 256> CRC_table = CRC_init();
 	_iobuf* logfile;
-	constinit float dB = -16.0f;
-	constexpr uint16_t framerate = 60;
+	constinit float dB = -16.0f; //default
+	unsigned delay;
+	struct {
+		uint16_t framerate = 60; //default
+		void operator()(void) {
+			delay = 1000 / this->framerate;
+		}
+	} config;
 }
 namespace path {
 	constexpr std::array<std::pair<const char*, const uint32_t>, 10> engine { /* path | CRC */

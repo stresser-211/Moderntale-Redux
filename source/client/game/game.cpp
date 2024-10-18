@@ -15,22 +15,23 @@ int main(int argc, char** argv) {
 	SDL_Window* window; SDL_Renderer* rend;
 	try {
 		stacktrace(module::core, "Launched Moderntale Redux.");
-		verify_integrity(); init();
+		verify_integrity(); init(); gl::config();
 
 		window = SDL_CreateWindow("[Moderntale Redux]", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCR_WIDTH, SCR_HEIGHT, SDL_WINDOW_BORDERLESS);
-		rend = SDL_CreateRenderer(window, -1, 0); SDL_SetRenderDrawColor(rend, 255, 255, 255, 255);
+		rend = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+		SDL_SetRenderDrawColor(rend, 255, 255, 255, 255);
 		Mix_AllocateChannels(0x10);
 		SDL_Event event;
 		
-		/* TODO something with this abomination. */
+		/* TODO something with this sheet already dammit */
 		scene MainMenu(rend);
 		MainMenu.create_object<object>(0, 0, -69Z, path::img::menu_bg);
 		MainMenu.create_object<button>(50, 50, 420Z, path::img::menu_button);
 		MainMenu.get<button>(420Z)->move_to(40, 460);
-		MainMenu.rerender();
-		snd_loop(path::bgm::menu, CH_MUS);
+		audio menu_loop(path::bgm::menu);
+		menu_loop.play(CH_MUS);
 		for (;;) {
-			//MainMenu.rerender();
+			MainMenu.rerender();
 			SDL_GetMouseState(&mouse.x, &mouse.y);
 			while (SDL_PollEvent(&event)) {
 				switch (event.type) {
@@ -42,11 +43,15 @@ int main(int argc, char** argv) {
 					break;
 				}
 			}
-			FRAMERATE_DELAY();
+			SDL_Delay(gl::delay);
 		}
-	} catch (ERROR E) {
-		snd_stop(CH_ALL);
-		if (E != INITIALISATION) snd_play(path::sfx::error, CH_SND);
+	}
+	catch (ERROR E) {
+		Mix_HaltChannel(-1);
+		if (E != INITIALISATION) {
+			audio menu_loop(path::sfx::error);
+			menu_loop.play(CH_SND);
+		} //ехидный деструктор (146% kurwa)
 		switch (E) {
 		case INITIALISATION:
 			ERROR_CRIT("Initialisation error.");
@@ -65,15 +70,16 @@ int main(int argc, char** argv) {
 		goto CLEANUP_ERR;
 	}
 CLEANUP:
-	snd_stop(CH_ALL);
-	std::thread([&]() {
-		snd_play(path::sfx::quit, CH_SND);
-	}).detach();
-	float alpha; alpha = 1.0f;
-	while (alpha > 0.0f) {
-		if (alpha < 0.0f) break;
-		SDL_SetWindowOpacity(window, alpha -= 0.01f);
-		SDL_Delay(35);
+	Mix_HaltChannel(-1);
+	{
+		audio menu_loop(path::sfx::quit);
+		menu_loop.play(CH_SND);
+		float alpha = 1.0f;
+		while (alpha > 0.0f) {
+			if (alpha < 0.0f) break;
+			SDL_SetWindowOpacity(window, alpha -= 0.01f);
+			SDL_Delay(35);
+		}
 	}
 CLEANUP_ERR:
 	{

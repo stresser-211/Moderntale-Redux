@@ -4,27 +4,9 @@
 #include "../utility.hpp"
 
 class object {
-	void _constructor(SDL_Renderer* rend, int_fast64_t z, const char* image_path) {
-		this->z = insert_z_order(z);
-		if (image_path) {
-			this->image_path = image_path;
-			texture = IMG_LoadTexture(rend, image_path);
-		} else {
-			this->image_path = path::img::null;
-			texture = NULL;
-		}
-		if (!texture) {
-			stacktrace(module::warn, "Couldn't load \"%s\". Object discarded.", image_path);
-			obj_count.erase(z);
-		} else {
-			SDL_QueryTexture(texture, NULL, NULL, &rect.w, &rect.h);
-		}
-		//todo: proper exception handler
-	}
 	friend class actor;
 	object(SDL_Renderer* rend, const char* skin, int64_t x, int64_t y, uint8_t alpha)
-		: x(x), y(y), alpha(alpha)
-	{
+		: x(x), y(y), alpha(alpha) {
 		//todo: implementation
 	}
 protected:
@@ -83,14 +65,24 @@ public:
 	}
 	object(void) = delete;
 	object(SDL_Renderer* rend, int_fast64_t z, const char* image, int64_t x, int64_t y, uint8_t alpha, uint16_t rot, float scale)
-		: x(x), y(y), alpha(alpha), rot(rot), scale(scale)
-	{
-			_constructor(rend, z, image); //rewrite
+		: x(x), y(y), alpha(alpha), rot(rot), scale(scale) , image_path(image) {
+		this->z = insert_z_order(z);
+		if (image_path) {
+			texture = IMG_LoadTexture(rend, image_path);
+		} else {
+			this->image_path = path::img::null;
+			texture = IMG_LoadTexture(rend, image_path);
+		}
+		if (!texture) {
+			stacktrace(module::warn, "Couldn't load \"%s\". Object discarded.", image_path);
+			obj_count.erase(z);
+		} else {
+			SDL_QueryTexture(texture, NULL, NULL, &rect.w, &rect.h);
+		}
+		//todo: proper exception handler
 	}
-	object(SDL_Renderer* rend, object* obj)
-		: x(obj->x), y(obj->y), alpha(obj->alpha), rot(obj->rot), scale(obj->scale)
-	{
-			_constructor(rend, uniquify_z_order(obj->z), obj->image_path);
+	object(SDL_Renderer* rend, object* obj) {
+			object(rend, uniquify_z_order(obj->z), obj->image_path, obj->x, obj->y, obj->alpha, obj->rot, obj->scale);
 	}
 	virtual ~object(void) {
 		SDL_DestroyTexture(texture);
@@ -133,12 +125,10 @@ class button : public object {
 public:
 	button(void) = delete;
 	button(SDL_Renderer* rend, int_fast64_t z, const char* image, int64_t x, int64_t y, uint8_t alpha, uint16_t rot, float scale)
-		: object(rend, z, image, x, y, alpha, rot, scale)
-	{
+		: object(rend, z, image, x, y, alpha, rot, scale) {
 	}
 	button(SDL_Renderer* rend, button* button)
-		: object(rend, uniquify_z_order(button->z), button->image_path, button->x, button->y, button->alpha, button->rot, button->scale)
-	{
+		: object(rend, uniquify_z_order(button->z), button->image_path, button->x, button->y, button->alpha, button->rot, button->scale) {
 	}
 	bool was_clicked(int& mouse_x, int& mouse_y) {
 		int txtrw, txtrh;
@@ -160,13 +150,11 @@ class sequence : public object {
 	uint8_t current_frame;
 public:
 	sequence(void) = delete;
-	sequence(SDL_Renderer* rend, int_fast64_t z, int x, int y, const char* animlist, uint8_t alpha, uint16_t rot, float scale)
-		: object(rend, z, "", x, y, alpha, rot, scale)
-	{
+	sequence(SDL_Renderer* rend, int_fast64_t z, int64_t x, int64_t y, const char* animlist, uint8_t alpha, uint16_t rot, float scale)
+		: object(rend, z, "", x, y, alpha, rot, scale) {
 	}
 	sequence(SDL_Renderer* rend, sequence* seq)
-		: object(rend, uniquify_z_order(seq->z), seq->image_path, seq->x, seq->y, seq->alpha, seq->rot, seq->scale)
-	{
+		: object(rend, uniquify_z_order(seq->z), seq->image_path, seq->x, seq->y, seq->alpha, seq->rot, seq->scale) {
 	}
 	~sequence(void) {
 		std::for_each(frames.begin(), frames.end(), [](auto frame) {

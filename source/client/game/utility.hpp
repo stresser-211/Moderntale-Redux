@@ -2,8 +2,6 @@
 
 #include "incl.hpp"
 
-static uint16_t duration = 1000 / gl::framerate;
-
 template <typename T> concept is_number = std::is_arithmetic_v<T> && !std::is_same_v<bool, T>;
 template <typename T> concept is_positive = is_number<T> && requires(T a) {
 	std::cmp_greater(a, 0u);
@@ -12,13 +10,6 @@ template <typename T> concept is_positive = is_number<T> && requires(T a) {
 constexpr inline int_fast64_t operator""Z(unsigned long long i) {
 	return static_cast<int_fast64_t>(i);
 }
-void FRAMERATE_DELAY(void) {
-	const auto start = SDL_GetTicks();
-	auto frame_time = SDL_GetTicks() - start;
-	if (frame_time < duration) {
-		SDL_Delay(duration - frame_time);
-	}
-};
 inline void ERROR_CRIT(const char* msg) {
 	SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "(see stacktrace.log for details)", msg, NULL);
 };
@@ -87,3 +78,10 @@ int verify_integrity(void) {
 	}
 	return SUCCESS;
 }
+namespace random {
+	[[nodiscard]] int32_t int32(void) {
+		std::random_device rd;
+		std::mt19937_64 mt(rd());
+		return mt();
+	}
+};

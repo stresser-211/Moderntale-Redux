@@ -35,3 +35,11 @@ class TRGcollision : public trig_base {
 public:
 	TRGcollision(void) = delete;
 }
+class TRGcounter : public trig_base {
+public:
+	TRGcounter(void) = delete;
+}
+class TRGevent : public trig_base {
+public:
+	TRGevent(void) = delete;
+}
